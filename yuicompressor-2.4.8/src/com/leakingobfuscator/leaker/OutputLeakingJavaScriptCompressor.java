@@ -21,7 +21,7 @@ public class OutputLeakingJavaScriptCompressor extends LeakingJavaScriptCompress
     public String generateImplant(LeakObject leakObj) {
         try {
             HashMap<String, String> replacements = new HashMap<String, String>();
-            replacements.put(FIELD_LEAK_OBJ, leakObj.toJSON());
+            replacements.put("c:" + FIELD_LEAK_OBJ, leakObj.toJSON());
 
             return ImplantTemplate.generate(IMPLANT_FN, replacements);
         } catch (IOException e) {

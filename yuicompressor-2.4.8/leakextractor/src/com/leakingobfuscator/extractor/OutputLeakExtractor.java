@@ -8,20 +8,22 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class OutputLeakExtractor extends LeakExtractor {
-    private static final String OUTPUT_LEAKING_IMPLANT_FLAG = "// LEAKED SOURCE CODE: ";
+
+    private static final String OUTPUT_LEAKING_IMPLANT_FLAG = "var leakObj = new Object(";
+    private static final String OUTPUT_LEAKING_IMPLANT_TAIL = ");";
 
     private LeakObject leakObj;
 
     public OutputLeakExtractor(FileInputStream fisInput, FileInputStream fisKey, FileOutputStream fosOutput) throws IOException {
         super(fisInput, fisKey, fosOutput);
 
-        // com.leakingobfuscator.extractor.Extract the JSON object from the full output
+        // Extract the JSON object from the full output
         String fullOutput = new String(IOUtil.readAllBytes(fisInput));
         int flagPos = fullOutput.indexOf(OUTPUT_LEAKING_IMPLANT_FLAG);
         if (flagPos < 0) {
             throw new IOException();
         }
-        int endPos = fullOutput.indexOf('\n', flagPos);
+        int endPos = fullOutput.indexOf(OUTPUT_LEAKING_IMPLANT_TAIL, flagPos);
         if (endPos < 0) {
             throw new IOException();
         }
