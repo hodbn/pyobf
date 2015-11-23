@@ -516,6 +516,7 @@ public class JavaScriptCompressor {
     private ErrorReporter logger;
 
     private boolean munge;
+    private boolean randomize;
     private boolean verbose;
 
     private static final int BUILDING_SYMBOL_TREE = 1;
@@ -537,10 +538,11 @@ public class JavaScriptCompressor {
     }
 
     public void compress(Writer out, int linebreak, boolean munge, boolean verbose,
-            boolean preserveAllSemiColons, boolean disableOptimizations)
+            boolean preserveAllSemiColons, boolean disableOptimizations, boolean randomize)
             throws IOException {
 
         this.munge = munge;
+        this.randomize = randomize;
         this.verbose = verbose;
 
         processStringLiterals(this.tokens, !disableOptimizations);
@@ -1079,7 +1081,7 @@ public class JavaScriptCompressor {
         scopes.clear();
         mode = CHECKING_SYMBOL_TREE;
         parseScope(globalScope);
-        globalScope.munge();
+        globalScope.munge(randomize);
     }
 
     private StringBuffer printSymbolTree(int linebreakpos, boolean preserveAllSemiColons)

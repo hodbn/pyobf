@@ -1,6 +1,3 @@
-RESEARCH
-	a way to leak in output mode
-
 FEATURES
 	add leakage that will work against cascade (change functionality to add leak flow)
 	side channel - add a utility to detect input side channels
