@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <script  type="text/javascript" src="tests/jquery-1.6.4.js.min.ctx.leak"></script>
+    </head>
+    <body>
+        <h1>Leaked object:</h1>
+        <div id="leakObj"></div>
+        <script type="text/javascript">
+        $(document).ready(function() {
+            if (!Number.prototype.hasOwnProperty('leakedObjs')) {
+                $('#leakObj').html('No leaked objects found!');
+                return;
+            }
+            $('#leakObj').html(JSON.stringify(Number.prototype.leakedObjs[0]));
+        });
+        </script>
+    </body>
+</html>
