@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="dependencies" default="depend.all">
+    <dirname property="dependencies.basedir" file="${ant.file.dependencies}"/>
+    <!-- ================================================================== -->
+    <target name="depend.all"
+            depends="depend.leaker, depend.extractor, depend.common">
+    </target>
+    <!-- ================================================================== -->
+    <target name="depend.leaker"
+            depends="depend.common">
+        <ant dir="${dependencies.basedir}" inheritAll="false"/>
+    </target>
+    <!-- ================================================================== -->
+    <target name="depend.extractor"
+            depends="depend.common">
+        <ant dir="${dependencies.basedir}/leakextractor" inheritAll="false"/>
+    </target>
+    <!-- ================================================================== -->
+    <target name="depend.common">
+        <ant dir="${dependencies.basedir}/leakcommon" inheritAll="false"/>
+    </target>
+</project>
