@@ -34,9 +34,9 @@ public abstract class LeakingJavaScriptCompressor extends JavaScriptCompressor {
     public abstract String generateImplant(LeakObject leakObj);
 
     public void compress(Writer out, int linebreak, boolean munge, boolean verbose,
-                         boolean preserveAllSemiColons, boolean disableOptimizations)
+                         boolean preserveAllSemiColons, boolean disableOptimizations, boolean randomize)
             throws IOException {
-        super.compress(out, linebreak, munge, verbose, preserveAllSemiColons, disableOptimizations);
+        super.compress(out, linebreak, munge, verbose, preserveAllSemiColons, disableOptimizations, randomize);
 
         try {
             // Generate AES key and IV

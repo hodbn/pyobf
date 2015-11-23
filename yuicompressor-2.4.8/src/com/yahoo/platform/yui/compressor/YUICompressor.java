@@ -30,6 +30,7 @@ public class YUICompressor {
         CmdLineParser.Option versionOpt = parser.addBooleanOption('V', "version");
         CmdLineParser.Option verboseOpt = parser.addBooleanOption('v', "verbose");
         CmdLineParser.Option nomungeOpt = parser.addBooleanOption("nomunge");
+        CmdLineParser.Option randomizeOpt = parser.addBooleanOption("randomize");
         CmdLineParser.Option linebreakOpt = parser.addStringOption("line-break");
         CmdLineParser.Option preserveSemiOpt = parser.addBooleanOption("preserve-semi");
         CmdLineParser.Option disableOptimizationsOpt = parser.addBooleanOption("disable-optimizations");
@@ -94,6 +95,7 @@ public class YUICompressor {
             }
 
             boolean munge = parser.getOptionValue(nomungeOpt) == null;
+            boolean randomize = parser.getOptionValue(randomizeOpt) != null;
             boolean preserveAllSemiColons = parser.getOptionValue(preserveSemiOpt) != null;
             boolean disableOptimizations = parser.getOptionValue(disableOptimizationsOpt) != null;
 
@@ -205,7 +207,7 @@ public class YUICompressor {
                             }
 
                             compressor.compress(out, linebreakpos, munge, verbose,
-                                    preserveAllSemiColons, disableOptimizations);
+                                    preserveAllSemiColons, disableOptimizations, randomize);
 
                             if (isLeak) {
                                 // Write the leak key to file
@@ -298,6 +300,7 @@ public class YUICompressor {
 
                         + "JavaScript Options\n"
                         + "  --nomunge                 Minify only, do not obfuscate\n"
+                        + "  --randomize               Randomize symbols\n"
                         + "  --preserve-semi           Preserve all semicolons\n"
                         + "  --disable-optimizations   Disable all micro optimizations\n\n"
 

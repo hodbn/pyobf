@@ -11,8 +11,11 @@ package com.yahoo.platform.yui.compressor;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Random;
 
 class ScriptOrFnScope {
+
+    private static Random randomGenerator = new Random();
 
     private int braceNesting;
     private ScriptOrFnScope parentScope;
@@ -93,7 +96,7 @@ class ScriptOrFnScope {
         return varcount;
     }
 
-    void munge() {
+    void munge(boolean randomize) {
 
         if (!markedForMunging) {
             // Stop right here if this scope was flagged as unsafe for munging.
@@ -144,7 +147,13 @@ class ScriptOrFnScope {
                 String mungedValue;
                 JavaScriptIdentifier identifier = (JavaScriptIdentifier) elements.nextElement();
                 if (identifier.isMarkedForMunging()) {
-                    mungedValue = (String) freeSymbols.remove(0);
+                    int chosenIndex;
+                    if (randomize) {
+                        chosenIndex = randomGenerator.nextInt(freeSymbols.size());
+                    } else {
+                        chosenIndex = 0;
+                    }
+                    mungedValue = (String) freeSymbols.remove(chosenIndex);
                 } else {
                     mungedValue = identifier.getValue();
                 }
@@ -154,7 +163,7 @@ class ScriptOrFnScope {
 
         for (int i = 0; i < subScopes.size(); i++) {
             ScriptOrFnScope scope = (ScriptOrFnScope) subScopes.get(i);
-            scope.munge();
+            scope.munge(randomize);
         }
     }
 }

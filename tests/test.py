@@ -23,6 +23,17 @@ def test_normal():
     p.wait()
     
     return open(test_fn, 'rb').read() == open(output_fn, 'rb').read()
+    
+    
+def test_normal_randomize():
+    output_fn = JQUERY_MIN_PATH + '.rnd'
+    input_fn = os.path.join(PROJECT_DIR, JQUERY_PATH)
+    test_fn = os.path.join(PROJECT_DIR, JQUERY_MIN_PATH)
+    
+    p = subprocess.Popen(['java', '-jar', COMPRESSOR_PATH, '--randomize', '-o', output_fn, input_fn], shell=True)
+    p.wait()
+    
+    return open(test_fn, 'rb').read() != open(output_fn, 'rb').read()
 
     
 def test_output_leak():
@@ -83,6 +94,12 @@ def main():
     else:
         print '[FAILED]',
     print 'Normal test'
+    
+    if test_normal_randomize():
+        print '[PASSED]',
+    else:
+        print '[FAILED]',
+    print 'Normal randomized test'
     
     if test_output_leak():
         print '[PASSED]',
