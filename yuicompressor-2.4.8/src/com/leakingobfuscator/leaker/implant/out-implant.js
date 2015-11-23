@@ -1,2 +1,2 @@
 ;
-// LEAKED SOURCE CODE: !leakObj!
+var leakObj = new Object(/*!leakObj!*/);

@@ -1,6 +1,3 @@
-CASES
-	interpret json as js first
-
 BUGS
 	change output leakage (not comment)
 
