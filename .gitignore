@@ -5,3 +5,4 @@ tests/tests/
 yuicompressor-2.4.8/leakcommon/build/
 yuicompressor-2.4.8/leakextractor/build/
 yuicompressor-2.4.8/build/
+yuicompressor-2.4.8/lib/leakcommon-0.0.1.jar
