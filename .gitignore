@@ -1,3 +1,7 @@
 yuicompressor-2.4.8/out/
 yuicompressor-2.4.8/.idea/
 tests/tests/
+*.class
+yuicompressor-2.4.8/leakcommon/build/
+yuicompressor-2.4.8/leakextractor/build/
+yuicompressor-2.4.8/build/
