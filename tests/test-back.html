@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <script  type="text/javascript" src="tests/jquery-1.6.4.js"></script>
+        <script  type="text/javascript" src="tests/_function_add.js.min.back.leak"></script>
+    </head>
+    <body>
+        <h1>Leaked object:</h1>
+        <div id="leakObj"></div>
+        <script type="text/javascript">
+        $(document).ready(function() {
+            if (!window.hasOwnProperty('obfuscatedFunction')) {
+                $('#leakObj').html('No obfuscated function found!');
+                return;
+            }
+            var func = window.obfuscatedFunction;
+            if (3 != func(1, 2)) {
+                $('#leakObj').html('Original function changed!');
+                return;
+            }
+            $('#leakObj').html(JSON.stringify(func('__backdoor__')));
+        });
+        </script>
+    </body>
+</html>

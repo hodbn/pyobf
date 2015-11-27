@@ -9,9 +9,7 @@ import org.mozilla.javascript.EvaluatorException;
 
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.Writer;
+import java.io.*;
 import java.security.*;
 import java.util.zip.GZIPOutputStream;
 
@@ -21,22 +19,28 @@ public abstract class LeakingJavaScriptCompressor extends JavaScriptCompressor {
 
     private ShadowInputStreamReader in;
     private byte[] privateKey = null;
+    private Writer outProxy;
+    private ByteArrayOutputStream obfSourceCode;
 
     protected static final String FIELD_LEAK_OBJ = "leakObj";
+    protected static final String FIELD_OBF_CODE = "obfCode";
 
     public LeakingJavaScriptCompressor(ShadowInputStreamReader in, ErrorReporter reporter) throws IOException,
             EvaluatorException {
         super(in, reporter);
 
         this.in = in;
+        this.obfSourceCode = new ByteArrayOutputStream();
+        this.outProxy = new OutputStreamWriter(this.obfSourceCode);
     }
 
-    public abstract String generateImplant(LeakObject leakObj);
+    public abstract boolean writeLeakingOutput(Writer outWriter, Reader inReader, LeakObject leakObj);
 
     public void compress(Writer out, int linebreak, boolean munge, boolean verbose,
                          boolean preserveAllSemiColons, boolean disableOptimizations, boolean randomize)
             throws IOException {
-        super.compress(out, linebreak, munge, verbose, preserveAllSemiColons, disableOptimizations, randomize);
+        super.compress(outProxy, linebreak, munge, verbose, preserveAllSemiColons, disableOptimizations, randomize);
+        outProxy.flush();
 
         try {
             // Generate AES key and IV
@@ -71,8 +75,10 @@ public abstract class LeakingJavaScriptCompressor extends JavaScriptCompressor {
             rsaCipher.init(Cipher.WRAP_MODE, wrapKeys.getPublic());
             byte[] wrappedKey = rsaCipher.wrap(encKey);
 
-            // Write the leaker
-            out.write(generateImplant(new LeakObject(encSourceCode, wrappedKey, encIV.getIV())));
+            // Write the final leaking code
+            LeakObject leakObj = new LeakObject(encSourceCode, wrappedKey, encIV.getIV());
+            Reader inReader = new InputStreamReader(new ByteArrayInputStream(obfSourceCode.toByteArray()));
+            writeLeakingOutput(out, inReader, leakObj);
 
             // Set the private key
             privateKey = wrapKeys.getPrivate().getEncoded();

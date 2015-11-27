@@ -21,8 +21,17 @@ public class IOUtil {
         byte[] buf = new byte[BUF_SIZE];
         int bytesRead;
 
-        while ((bytesRead = is.read(buf, 0, buf.length)) > 0) {
+        while ((bytesRead = is.read(buf, 0, buf.length)) >= 0) {
             os.write(buf, 0, bytesRead);
+        }
+    }
+
+    public static void copy(Reader in, Writer out) throws IOException {
+        char[] buf = new char[BUF_SIZE];
+        int bytesRead;
+
+        while ((bytesRead = in.read(buf, 0, buf.length)) >= 0) {
+            out.write(buf, 0, bytesRead);
         }
     }
 
