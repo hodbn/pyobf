@@ -872,9 +872,7 @@ public class JavaScriptCompressor {
 
                             if (identifier == null) {
 
-                                if (!builtin.contains(symbol) || "eval".equals(symbol)) {
-                                    notifyUndeclaredSymbol(symbol);
-                                }
+                                notifyUndeclaredSymbol(symbol);
 
                                 if (symbol.length() <= 3 && !builtin.contains(symbol)) {
                                     // Here, we found an undeclared and un-namespaced symbol that is
@@ -1026,9 +1024,7 @@ public class JavaScriptCompressor {
 
                             if (identifier == null) {
 
-                                if (!builtin.contains(symbol) || "eval".equals(symbol)) {
-                                    notifyUndeclaredSymbol(symbol);
-                                }
+                                notifyUndeclaredSymbol(symbol);
 
                                 if (symbol.length() <= 3 && !builtin.contains(symbol)) {
                                     // Here, we found an undeclared and un-namespaced symbol that is
