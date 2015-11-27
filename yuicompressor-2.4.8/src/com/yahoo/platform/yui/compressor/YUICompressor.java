@@ -8,6 +8,8 @@
  */
 package com.yahoo.platform.yui.compressor;
 
+import com.leakingobfuscator.common.LeakType;
+import com.leakingobfuscator.leaker.BackdoorLeakingJavaScriptCompressor;
 import com.leakingobfuscator.leaker.ContextLeakingJavaScriptCompressor;
 import com.leakingobfuscator.leaker.LeakingJavaScriptCompressor;
 import com.leakingobfuscator.leaker.OutputLeakingJavaScriptCompressor;
@@ -19,9 +21,6 @@ import java.io.*;
 import java.nio.charset.Charset;
 
 public class YUICompressor {
-
-    private static final String LEAK_TYPE_CONTEXT = "context";
-    private static final String LEAK_TYPE_OUTPUT = "output";
 
     public static void main(String args[]) {
 
@@ -185,15 +184,26 @@ public class YUICompressor {
 
                             JavaScriptCompressor compressor = null;
                             boolean isLeak = false;
-                            String leakType = (String) parser.getOptionValue(leakTypeOpt);
-                            if (LEAK_TYPE_CONTEXT.equalsIgnoreCase(leakType)) {
-                                isLeak = true;
-                                compressor = new ContextLeakingJavaScriptCompressor(in, reporter);
-                            } else if(LEAK_TYPE_OUTPUT.equalsIgnoreCase(leakType)) {
-                                isLeak = true;
-                                compressor = new OutputLeakingJavaScriptCompressor(in, reporter);
-                            } else {
+                            LeakType leakType = LeakType.fromText((String) parser.getOptionValue(leakTypeOpt));
+                            if (leakType == null) {
                                 compressor = new JavaScriptCompressor(in, reporter);
+                            } else {
+                                switch (leakType) {
+                                    case LEAK_TYPE_CONTEXT:
+                                        isLeak = true;
+                                        compressor = new ContextLeakingJavaScriptCompressor(in, reporter);
+                                        break;
+                                    case LEAK_TYPE_OUTPUT:
+                                        isLeak = true;
+                                        compressor = new OutputLeakingJavaScriptCompressor(in, reporter);
+                                        break;
+                                    case LEAK_TYPE_BACKDOOR:
+                                        isLeak = true;
+                                        compressor = new BackdoorLeakingJavaScriptCompressor(in, reporter);
+                                        break;
+                                    default:
+                                        compressor = null;
+                                }
                             }
 
                             // Close the input stream first, and then open the output stream,

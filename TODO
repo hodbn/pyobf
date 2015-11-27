@@ -1,3 +1,9 @@
 FEATURES
-	add leakage that will work against cascade (change functionality to add leak flow)
-	side channel - add a utility to detect input side channels
+    Create a utility to detect non-autonomous function
+        All used symbols should be declared inside the function
+        something like the automatic nomunge, if detected - stop everything
+    Work on a different obfuscator
+        What features to implement?
+        Different language?
+    Study performance impact
+    Measure quality of obfuscation

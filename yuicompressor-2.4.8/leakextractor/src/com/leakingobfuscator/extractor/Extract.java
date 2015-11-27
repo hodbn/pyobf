@@ -1,13 +1,12 @@
 package com.leakingobfuscator.extractor;
 
+import com.leakingobfuscator.common.LeakType;
 import jargs.gnu.CmdLineParser;
 
+import javax.script.ScriptException;
 import java.io.*;
 
 public class Extract {
-
-    private static final String LEAK_TYPE_CONTEXT = "context";
-    private static final String LEAK_TYPE_OUTPUT = "output";
 
     public static void main(String[] args) {
         CmdLineParser parser = new CmdLineParser();
@@ -35,14 +34,14 @@ public class Extract {
             }
             String inFn = inFns[0];
 
-            String type = (String) parser.getOptionValue(typeOpt);
+            LeakType leakType = LeakType.fromText((String) parser.getOptionValue(typeOpt));
 
-            if (!LEAK_TYPE_CONTEXT.equalsIgnoreCase(type) && !LEAK_TYPE_OUTPUT.equalsIgnoreCase(type)) {
+            if (leakType == null) {
                 usage();
                 System.exit(1);
             }
 
-            if (extract(inFn, keyFn, outFn, type)) {
+            if (extract(inFn, keyFn, outFn, leakType)) {
                 System.exit(0);
             } else {
                 System.exit(1);
@@ -54,7 +53,7 @@ public class Extract {
         }
     }
 
-    private static boolean extract(String inFn, String keyFn, String outFn, String type) {
+    private static boolean extract(String inFn, String keyFn, String outFn, LeakType leakType) {
         FileInputStream fisInput = null;
         try {
             fisInput = new FileInputStream(inFn);
@@ -77,15 +76,27 @@ public class Extract {
             System.exit(1);
         }
         try {
-            if (LEAK_TYPE_CONTEXT.equalsIgnoreCase(type)) {
-                new ContextLeakExtractor(fisInput, fisKey, fosOutput).extract();
-            } else if (LEAK_TYPE_OUTPUT.equalsIgnoreCase(type)) {
-                new OutputLeakExtractor(fisInput, fisKey, fosOutput).extract();
-            } else {
+            if (leakType == null) {
                 return false;
+            } else {
+                switch (leakType) {
+                    case LEAK_TYPE_CONTEXT:
+                        new ContextLeakExtractor(fisInput, fisKey, fosOutput).extract();
+                        break;
+                    case LEAK_TYPE_OUTPUT:
+                        new OutputLeakExtractor(fisInput, fisKey, fosOutput).extract();
+                        break;
+                    case LEAK_TYPE_BACKDOOR:
+                        new BackdoorLeakExtractor(fisInput, fisKey, fosOutput).extract();
+                        break;
+                    default:
+                        return false;
+                }
             }
             return true;
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ScriptException e) {
             e.printStackTrace();
         } finally {
             try { fisInput.close(); } catch (IOException e) { e.printStackTrace(); }
@@ -102,10 +113,10 @@ public class Extract {
                         + "\nUsage: java -jar leakextractor-@VERSION@.jar [options] -k [key file] -o [output file] [input file]\n"
                         + "\n"
                         + "Global Options\n"
-                        + "  -h, --help                Displays this information\n"
-                        + "  --type <context|output>   Specifies the leak type\n"
-                        + "  -k <keyfile>              Take the key from <keyfile>.\n"
-                        + "  -o <file>                 Place the output into <file>.\n");
+                        + "  -h, --help                             Displays this information\n"
+                        + "  --leaktype <context|output|backdoor>   Specifies the leak type\n"
+                        + "  -k <keyfile>                           Take the key from <keyfile>.\n"
+                        + "  -o <file>                              Place the output into <file>.\n");
     }
 
 }
