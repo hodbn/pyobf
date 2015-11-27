@@ -91,7 +91,6 @@ def test_context_leak():
 def test_backdoor_leak():
     output_fn = FA_MIN_PATH + '.back.src'
     back_fn = FA_MIN_PATH + '.back.leak'
-    obj_fn = FA_MIN_PATH + '.back.obj'
     input_fn = os.path.join(PROJECT_DIR, FA_PATH)
     
     if os.path.isfile(back_fn):
@@ -99,18 +98,7 @@ def test_backdoor_leak():
     p = subprocess.Popen(['java', '-jar', COMPRESSOR_PATH, '--leaktype', 'backdoor', '--leakkey', KEY_PATH, '-o', back_fn, input_fn], shell=True)
     p.wait()
     
-    from splinter.browser import Browser
-    browser = Browser()
-    browser.visit('file://' + os.path.realpath('test-back.html'))
-    try:
-        leak_json = browser.find_by_css('#leakObj')[0].value
-    finally:
-        browser.quit()
-    
-    if os.path.isfile(output_fn):
-        os.remove(output_fn)
-    open(obj_fn, 'wb').write(leak_json)
-    p = subprocess.Popen(['java', '-jar', EXTRACTOR_PATH, '--leaktype', 'backdoor', '--leakkey', KEY_PATH, '-o', output_fn, obj_fn], shell=True)
+    p = subprocess.Popen(['java', '-jar', EXTRACTOR_PATH, '--leaktype', 'backdoor', '--leakkey', KEY_PATH, '-o', output_fn, back_fn], shell=True)
     p.wait()
     
     return open(FA_PATH, 'rb').read() == open(output_fn, 'rb').read()
