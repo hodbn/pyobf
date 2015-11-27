@@ -1,0 +1,1 @@
+java -jar compiler.jar -O SIMPLE_OPTIMIZATIONS --js yuicompressor-2.4.8\tests\_function_add.js --js_output_file c:\temp\aaa.js
