@@ -1,0 +1,1 @@
+perl jsPacker.pl -i ..\..\yuicompressor-2.4.8\tests\_function_add.js -o aaa.js -e62
