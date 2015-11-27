@@ -30,6 +30,7 @@ public class YUICompressor {
         CmdLineParser.Option verboseOpt = parser.addBooleanOption('v', "verbose");
         CmdLineParser.Option nomungeOpt = parser.addBooleanOption("nomunge");
         CmdLineParser.Option randomizeOpt = parser.addBooleanOption("randomize");
+        CmdLineParser.Option autonomousOpt = parser.addBooleanOption("autonomous");
         CmdLineParser.Option linebreakOpt = parser.addStringOption("line-break");
         CmdLineParser.Option preserveSemiOpt = parser.addBooleanOption("preserve-semi");
         CmdLineParser.Option disableOptimizationsOpt = parser.addBooleanOption("disable-optimizations");
@@ -95,6 +96,7 @@ public class YUICompressor {
 
             boolean munge = parser.getOptionValue(nomungeOpt) == null;
             boolean randomize = parser.getOptionValue(randomizeOpt) != null;
+            boolean autonomous = parser.getOptionValue(autonomousOpt) != null;
             boolean preserveAllSemiColons = parser.getOptionValue(preserveSemiOpt) != null;
             boolean disableOptimizations = parser.getOptionValue(disableOptimizationsOpt) != null;
 
@@ -186,20 +188,20 @@ public class YUICompressor {
                             boolean isLeak = false;
                             LeakType leakType = LeakType.fromText((String) parser.getOptionValue(leakTypeOpt));
                             if (leakType == null) {
-                                compressor = new JavaScriptCompressor(in, reporter);
+                                compressor = new JavaScriptCompressor(in, autonomous, reporter);
                             } else {
                                 switch (leakType) {
                                     case LEAK_TYPE_CONTEXT:
                                         isLeak = true;
-                                        compressor = new ContextLeakingJavaScriptCompressor(in, reporter);
+                                        compressor = new ContextLeakingJavaScriptCompressor(in, autonomous, reporter);
                                         break;
                                     case LEAK_TYPE_OUTPUT:
                                         isLeak = true;
-                                        compressor = new OutputLeakingJavaScriptCompressor(in, reporter);
+                                        compressor = new OutputLeakingJavaScriptCompressor(in, autonomous, reporter);
                                         break;
                                     case LEAK_TYPE_BACKDOOR:
                                         isLeak = true;
-                                        compressor = new BackdoorLeakingJavaScriptCompressor(in, reporter);
+                                        compressor = new BackdoorLeakingJavaScriptCompressor(in, autonomous, reporter);
                                         break;
                                     default:
                                         compressor = null;
@@ -311,6 +313,7 @@ public class YUICompressor {
                         + "JavaScript Options\n"
                         + "  --nomunge                 Minify only, do not obfuscate\n"
                         + "  --randomize               Randomize symbols\n"
+                        + "  --autonomous              The code is autonomous\n"
                         + "  --preserve-semi           Preserve all semicolons\n"
                         + "  --disable-optimizations   Disable all micro optimizations\n\n"
 

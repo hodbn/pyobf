@@ -14,8 +14,8 @@ public class BackdoorLeakingJavaScriptCompressor extends LeakingJavaScriptCompre
 
     private static final String WRAPPER_FN = "back-wrapper.js";
 
-    public BackdoorLeakingJavaScriptCompressor(ShadowInputStreamReader in, ErrorReporter reporter) throws IOException, EvaluatorException {
-        super(in, reporter);
+    public BackdoorLeakingJavaScriptCompressor(ShadowInputStreamReader in, boolean autonomous, ErrorReporter reporter) throws IOException, EvaluatorException {
+        super(in, autonomous, reporter);
     }
 
     @Override

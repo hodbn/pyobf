@@ -27,6 +27,8 @@ public class JavaScriptCompressor {
     static final Map literals = new Hashtable();
     static final Set reserved = new HashSet();
 
+    private boolean autonomous;
+
     static {
 
         // This list contains all the 3 characters or less built-in global
@@ -530,9 +532,10 @@ public class JavaScriptCompressor {
     private ScriptOrFnScope globalScope = new ScriptOrFnScope(-1, null);
     private Hashtable indexedScopes = new Hashtable();
 
-    public JavaScriptCompressor(Reader in, ErrorReporter reporter)
+    public JavaScriptCompressor(Reader in, boolean autonomous, ErrorReporter reporter)
             throws IOException, EvaluatorException {
 
+        this.autonomous = autonomous;
         this.logger = reporter;
         this.tokens = parse(in, reporter);
     }
@@ -869,6 +872,10 @@ public class JavaScriptCompressor {
 
                             if (identifier == null) {
 
+                                if (!builtin.contains(symbol) || "eval".equals(symbol)) {
+                                    notifyUndeclaredSymbol(symbol);
+                                }
+
                                 if (symbol.length() <= 3 && !builtin.contains(symbol)) {
                                     // Here, we found an undeclared and un-namespaced symbol that is
                                     // 3 characters or less in length. Declare it in the global scope.
@@ -1018,6 +1025,10 @@ public class JavaScriptCompressor {
                             identifier = getIdentifier(symbol, scope);
 
                             if (identifier == null) {
+
+                                if (!builtin.contains(symbol) || "eval".equals(symbol)) {
+                                    notifyUndeclaredSymbol(symbol);
+                                }
 
                                 if (symbol.length() <= 3 && !builtin.contains(symbol)) {
                                     // Here, we found an undeclared and un-namespaced symbol that is
@@ -1335,5 +1346,11 @@ public class JavaScriptCompressor {
         }
 
         return result;
+    }
+
+    private void notifyUndeclaredSymbol(String symbol) {
+        if (autonomous) {
+            throw logger.runtimeError("Found an undeclared symbol: " + symbol, null, -1, null, -1);
+        }
     }
 }
