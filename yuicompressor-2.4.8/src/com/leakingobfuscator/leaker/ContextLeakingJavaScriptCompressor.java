@@ -16,8 +16,8 @@ public class ContextLeakingJavaScriptCompressor extends LeakingJavaScriptCompres
 
     private static final String IMPLANT_FN = "ctx-implant.js";
 
-    public ContextLeakingJavaScriptCompressor(ShadowInputStreamReader in, ErrorReporter reporter) throws IOException, EvaluatorException {
-        super(in, reporter);
+    public ContextLeakingJavaScriptCompressor(ShadowInputStreamReader in, boolean autonomous, ErrorReporter reporter) throws IOException, EvaluatorException {
+        super(in, autonomous, reporter);
     }
 
     @Override

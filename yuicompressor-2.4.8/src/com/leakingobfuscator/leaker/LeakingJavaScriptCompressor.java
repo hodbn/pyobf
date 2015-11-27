@@ -25,9 +25,9 @@ public abstract class LeakingJavaScriptCompressor extends JavaScriptCompressor {
     protected static final String FIELD_LEAK_OBJ = "leakObj";
     protected static final String FIELD_OBF_CODE = "obfCode";
 
-    public LeakingJavaScriptCompressor(ShadowInputStreamReader in, ErrorReporter reporter) throws IOException,
+    public LeakingJavaScriptCompressor(ShadowInputStreamReader in, boolean autonomous, ErrorReporter reporter) throws IOException,
             EvaluatorException {
-        super(in, reporter);
+        super(in, autonomous, reporter);
 
         this.in = in;
         this.obfSourceCode = new ByteArrayOutputStream();

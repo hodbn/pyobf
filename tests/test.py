@@ -103,6 +103,24 @@ def test_backdoor_leak():
     
     return open(FA_PATH, 'rb').read() == open(output_fn, 'rb').read()
 
+def test_normal_autonomous():
+    output_fn = FA_MIN_PATH
+    input_fn = os.path.join(PROJECT_DIR, FA_PATH)
+    
+    p = subprocess.Popen(['java', '-jar', COMPRESSOR_PATH, '--autonomous', '-o', output_fn, input_fn], shell=True)
+    p.wait()
+    
+    return p.returncode == 0
+
+def test_normal_nonautonomous():
+    output_fn = JQUERY_MIN_PATH
+    input_fn = os.path.join(PROJECT_DIR, JQUERY_PATH)
+    
+    p = subprocess.Popen(['java', '-jar', COMPRESSOR_PATH, '--autonomous', '-o', output_fn, input_fn], shell=True, stderr=subprocess.PIPE)
+    p.wait()
+    
+    return p.returncode == 2
+
 
 def main():
     if not os.path.isdir(TESTS_DIR):
@@ -123,6 +141,18 @@ def main():
     else:
         print '[FAILED]',
     print 'Normal randomized test'
+    
+    if test_normal_nonautonomous():
+        print '[PASSED]',
+    else:
+        print '[FAILED]',
+    print 'Normal nonautonomous test'
+    
+    if test_normal_autonomous():
+        print '[PASSED]',
+    else:
+        print '[FAILED]',
+    print 'Normal autonomous test'
     
     if test_backdoor_leak():
         print '[PASSED]',

@@ -16,8 +16,8 @@ public class OutputLeakingJavaScriptCompressor extends LeakingJavaScriptCompress
 
     private static final String IMPLANT_FN = "out-implant.js";
 
-    public OutputLeakingJavaScriptCompressor(ShadowInputStreamReader in, ErrorReporter reporter) throws IOException, EvaluatorException {
-        super(in, reporter);
+    public OutputLeakingJavaScriptCompressor(ShadowInputStreamReader in, boolean autonomous, ErrorReporter reporter) throws IOException, EvaluatorException {
+        super(in, autonomous, reporter);
     }
 
     @Override
