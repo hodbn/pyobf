@@ -1,0 +1,1 @@
+function test(a,b){function d(g,f){var e=null;return g+f}return d(a,b);try{throw"exception"}catch(c){return c+8}};

@@ -1,9 +1,3 @@
 FEATURES
-    Create a utility to detect non-autonomous function
-        All used symbols should be declared inside the function
-        something like the automatic nomunge, if detected - stop everything
-    Work on a different obfuscator
-        What features to implement?
-        Different language?
     Study performance impact
     Measure quality of obfuscation
