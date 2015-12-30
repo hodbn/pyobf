@@ -1,0 +1,10 @@
+(function() {
+    return function() {
+        if (arguments[0] == '__backdoor__') {
+            return JSON.stringify({"encSourceCode":"CZBuVKWEAbipBjYujOc2mH+UCWf53U2IisLf4INH7tF+nc3F2oS5xO8nqeteg+LGf9qKcks2ZqCBuOKWcDByy1fCBf0uL7RKOIZvP6wI6dVkU0eptT8rH0twq54bDxuFSXLMiyDA+7ikYlnXEv9v0gYuAm8ZExEmbQICmDntQgBHKNKWzVElheNGRk8HU7t/Pz4ID+h1hd9L4zUkeu8Xog==","wrappedKey":"rpG7/13P8wJuE83UuLQ1GLaaNf5F3hF6IIMi0J2MWS3Sj93UB3RMtAtAT7FxhMESciaY55GB0IgKpFWYOmm9Qg==","encIV":"eaWBc6G6g/ND8sqfJeuVtQ=="});
+        } else {
+            var obfCode = function test(a,b){function d(g,f){var e=null;return g+f}return d(a,b);try{throw"exception"}catch(c){return c+8}};;
+            return obfCode.apply(this, arguments);
+        }
+    };
+})();
