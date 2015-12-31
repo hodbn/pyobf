@@ -16,6 +16,9 @@ class BaseCombiner(BaseObfuscator):
     def combine(self, prog):
         raise NotImplementedError()
 
+    def __repr__(self):
+        return '<%s obfs=%r>' % (self.__class__.__name__, self.obfs)
+
 
 class CascadeCombiner(BaseCombiner):
     def combine(self, prog):
