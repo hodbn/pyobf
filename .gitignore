@@ -12,3 +12,4 @@ obfuscators/js/yuicompressor-2.4.8-leak/build/
 obfuscators/js/yuicompressor-2.4.8-leak/leakextractor/build/
 obfuscators/js/yuicompressor-2.4.8-leak/leakcommon/build/
 obfuscators/js/yuicompressor-2.4.8-leak/lib/leakcommon-0.0.1.jar
+obfuscators/js/yuicompressor-2.4.8-leak/.idea/
