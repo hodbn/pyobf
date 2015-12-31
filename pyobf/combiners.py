@@ -25,11 +25,12 @@ class CascadeCombiner(BaseCombiner):
 
 
 class C4OutOf3Combiner(BaseCombiner):
-    def __init__(self, obfs):
+    def __init__(self, obfs, maj):
         super(C4OutOf3Combiner, self).__init__(obfs)
         assert len(self.obfs) == 4
         self.o1, self.o2, self.o3, self.o4 = self.obfs
-        self.maj = MajorityChooser(self.lang)
+        self.maj = maj
+        assert self.maj.lang == self.o1.lang
 
     def combine(self, prog):
         prog_o1 = self.o1.obfuscate(prog)
