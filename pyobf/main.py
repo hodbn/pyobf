@@ -2,10 +2,11 @@ import sys
 import time
 from choosers import JSMajorityChooser
 from combiners import C4OutOf3Combiner
-from obfuscators import YUIObfuscator
+from obfuscators import YUIObfuscator, ClosureObfuscator
 
 
 YUI_PATH = r'..\obfuscators\js\yuicompressor-2.4.8-leak\build\yuicompressor-2.4.8.jar'
+CLOSURE_PATH = r'..\obfuscators\js\closure\compiler.jar'
 JQUERY_PATH = r'..\obfuscators\js\yuicompressor-2.4.8-leak\tests\jquery-1.6.4.js'
 
 
@@ -23,13 +24,18 @@ def main():
 
     o_normal = YUIObfuscator(YUI_PATH)
     o_rand = YUIObfuscator(YUI_PATH, randomize=True)
+    o_closure = ClosureObfuscator(CLOSURE_PATH)
+
     o_leak_in_code = YUIObfuscator(YUI_PATH, leak='in-code')
     o_leak_run_time = YUIObfuscator(YUI_PATH, leak='run-time')
     o_leak_external = YUIObfuscator(YUI_PATH, leak='external')
 
+
     # profile normal obfuscator
     profile_obfuscator('Normal YUI', o_normal, jquery)
     profile_obfuscator('Normal YUI (Randomized)', o_rand, jquery)
+    profile_obfuscator('Closure', o_closure, jquery)
+
     profile_obfuscator('Malicious YUI (In-code)', o_leak_in_code, jquery)
     profile_obfuscator('Malicious YUI (Run-time)', o_leak_run_time, jquery)
     profile_obfuscator('Malicious YUI (External)', o_leak_external, jquery)
