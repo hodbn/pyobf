@@ -25,10 +25,21 @@ class CObfuscatorMixin:
 
 
 class YUIObfuscator(BaseObfuscator, JSObfuscatorMixin):
-    def __init__(self, jar, randomize=False):
+    _VALID_LEAKS_MAP = {
+        'in-code': 'output',
+        'run-time': 'backdoor',
+        'external': 'context',
+        # 'side-channel': None,
+    }
+
+    def __init__(self, jar, randomize=False, leak=None):
         super(YUIObfuscator, self).__init__()
         self.jar = jar
         self.randomize = randomize
+        self.leak = leak
+        if self.leak is not None:
+            assert self.leak in self._VALID_LEAKS_MAP
+            self.leak = self._VALID_LEAKS_MAP[leak]
 
     def _run_jar(self, *args):
         p = subprocess.Popen(['java', '-jar', self.jar] + list(args),
@@ -46,6 +57,8 @@ class YUIObfuscator(BaseObfuscator, JSObfuscatorMixin):
                 args = []
                 if self.randomize:
                     args.append('--randomize')
+                if self.leak:
+                    args.append('--leaktype=%s' % (self.leak, ))
                 args.extend(['-o', out_fn, infile.name])
                 if not self._run_jar(*args):
                     return None
