@@ -8,7 +8,7 @@ class BaseObfuscator(object):
     def obfuscate(self, prog):
         raise NotImplementedError()
 
-    def __str__(self):
+    def __repr__(self):
         return '<%s>' % (self.__class__.__name__, )
 
 
@@ -59,16 +59,19 @@ class YUIObfuscator(BaseObfuscator, JSObfuscatorMixin):
         self.leak = leak
         if self.leak is not None:
             assert self.leak in self._VALID_LEAKS_MAP
-            self.leak = self._VALID_LEAKS_MAP[leak]
 
     def obfuscate(self, prog):
         args = []
         if self.randomize:
             args.append('--randomize')
         if self.leak:
-            args.append('--leaktype=%s' % (self.leak, ))
+            args.append('--leaktype=%s' % (self._VALID_LEAKS_MAP[self.leak], ))
         args.extend(['-o', '%OUT_FILE%', '%IN_FILE%'])
         return _get_jar_input_output(self.jar, prog, args)
+
+    def __repr__(self):
+        return '<%s rand=%r, leak=%r>' % (self.__class__.__name__,
+                                          self.randomize, self.leak)
 
 
 class ClosureObfuscator(BaseObfuscator, JSObfuscatorMixin):
