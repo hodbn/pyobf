@@ -1,5 +1,6 @@
 import os
 import subprocess
+import sys
 
 from languages import *
 
@@ -33,9 +34,14 @@ def _get_jar_input_output(jar, prog, args):
             infile.write(prog)
         try:
             p = subprocess.Popen(['java', '-jar', jar] + list(args),
-                                 shell=True, env=env)
-            p.wait()
-            assert p.returncode == 0
+                                 shell=True, env=env, stdout=subprocess.PIPE,
+                                 stderr=subprocess.PIPE)
+            stdout, stderr = p.communicate()
+            assert p.returncode is not None
+            if p.returncode != 0:
+                sys.stdout.write(stdout)
+                sys.stderr.write(stderr)
+                assert False
             with open(out_fn, 'rb') as outfile:
                 return outfile.read()
         finally:
