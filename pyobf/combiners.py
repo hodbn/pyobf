@@ -1,9 +1,7 @@
-import copy
-from choosers import MajorityChooser
 from obfuscators import BaseObfuscator
 
 
-class BaseCombiner(object):
+class BaseCombiner(BaseObfuscator):
     def __init__(self, obfs):
         self.obfs = obfs
         assert len(self.obfs) > 0
@@ -13,6 +11,9 @@ class BaseCombiner(object):
 
     def combine(self, prog):
         raise NotImplementedError()
+
+    def obfuscate(self, prog):
+        return self.combine(prog)
 
     def __repr__(self):
         return '<%s obfs=%r>' % (self.__class__.__name__, self.obfs)
