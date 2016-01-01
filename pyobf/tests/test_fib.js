@@ -1,4 +1,4 @@
-function test_fib() {
+function run_test() {
     return [
         fib(1)
         , fib(2)
