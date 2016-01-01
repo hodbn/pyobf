@@ -49,12 +49,10 @@ def main():
     # profile cascade combiners
     profile_combiner(c_norm_rand_closure, jquery)
     profile_combiner(c_norm_rand_closure_in_code, jquery)
+
+    # profile 3-out-of-4 combiners
     return
     m = JSMajorityChooser()
-    cascade = C4OutOf3Combiner(obfs=[o, o, o, o], maj=m)
-
-    print len(o.obfuscate(jquery))
-    print len(cascade.combine(jquery))
 
     return 0
 
