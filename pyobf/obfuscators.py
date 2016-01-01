@@ -1,6 +1,7 @@
 import os
 import subprocess
 import sys
+import tempfile
 
 from languages import *
 
@@ -27,9 +28,14 @@ class CObfuscatorMixin:
 
 def _get_jar_input_output(jar, prog, args):
     env = os.environ
-    in_fn, out_fn = 'in.js', 'out.js'
-    env['IN_FILE'], env['OUT_FILE'] = in_fn, out_fn
+    in_fd, in_fn = tempfile.mkstemp(suffix='.js', dir='.')
+    in_fn = os.path.basename(in_fn)
     try:
+        os.close(in_fd)
+        out_fd, out_fn = tempfile.mkstemp(suffix='.js', dir='.')
+        out_fn = os.path.basename(out_fn)
+        os.close(out_fd)
+        env['IN_FILE'], env['OUT_FILE'] = in_fn, out_fn
         with open(in_fn, 'wb') as infile:
             infile.write(prog)
         try:
