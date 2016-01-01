@@ -8,7 +8,7 @@ from languages import *
 
 
 class BaseObfuscator(object):
-    def obfuscate(self, code):
+    def obfuscate(self, prog):
         raise NotImplementedError()
 
     def __repr__(self):

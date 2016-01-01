@@ -18,14 +18,7 @@ def profile_obfuscator(o, p):
     out = o.obfuscate(p)
     e = time.time()
     print 'size=%d,time=%3.3f' % (len(out.code), e - s)
-
-
-def profile_combiner(c, p):
-    print '%s:' % (c, ),
-    s = time.time()
-    out = c.combine(p)
-    e = time.time()
-    print 'size=%d,time=%3.3f' % (len(out.code), e - s)
+profile_combiner = profile_obfuscator
 
 
 def main():
@@ -60,13 +53,11 @@ def main():
 
     # profile 3-out-of-4 combiners
     m = JSMajorityChooser()
-    f_norm_rand_closure = C3OutOf4Combiner(obfs=[o_norm, o_rand, o_closure],
-                                           maj=m)
-    f_norm_rand_closure_in_code = C3OutOf4Combiner(obfs=[o_norm, o_rand,
-                                                         o_closure,
-                                                         o_leak_in_code],
-                                                   maj=m)
-    profile_combiner(f_norm_rand_closure, jquery)
+    f_norm_rand_closure_run_time = C3OutOf4Combiner(
+        obfs=[o_norm, o_rand, o_closure, o_leak_run_time], maj=m)
+    f_norm_rand_closure_in_code = C3OutOf4Combiner(
+        obfs=[o_norm, o_rand, o_closure, o_leak_in_code], maj=m)
+    profile_combiner(f_norm_rand_closure_run_time, jquery)
     profile_combiner(f_norm_rand_closure_in_code, jquery)
 
     return 0
