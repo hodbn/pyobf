@@ -1,17 +1,15 @@
+import copy
 from choosers import MajorityChooser
 from obfuscators import BaseObfuscator
 
 
-class BaseCombiner(BaseObfuscator):
+class BaseCombiner(object):
     def __init__(self, obfs):
         self.obfs = obfs
         assert len(self.obfs) > 0
         langs = [o.lang for o in self.obfs]
         assert all(langs[0] == l for l in langs)
         self.lang = langs[0]
-
-    def obfuscate(self, prog):
-        return self.combine(prog)
 
     def combine(self, prog):
         raise NotImplementedError()
@@ -27,9 +25,9 @@ class CascadeCombiner(BaseCombiner):
         return prog
 
 
-class C4OutOf3Combiner(BaseCombiner):
+class C3OutOf4Combiner(BaseCombiner):
     def __init__(self, obfs, maj):
-        super(C4OutOf3Combiner, self).__init__(obfs)
+        super(C3OutOf4Combiner, self).__init__(obfs)
         assert len(self.obfs) == 4
         self.o1, self.o2, self.o3, self.o4 = self.obfs
         self.maj = maj

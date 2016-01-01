@@ -1,3 +1,4 @@
+import copy
 import os
 import subprocess
 import sys
@@ -7,7 +8,7 @@ from languages import *
 
 
 class BaseObfuscator(object):
-    def obfuscate(self, prog):
+    def obfuscate(self, code):
         raise NotImplementedError()
 
     def __repr__(self):
@@ -26,7 +27,7 @@ class CObfuscatorMixin:
         return LANG_C
 
 
-def _get_jar_input_output(jar, prog, args):
+def _get_jar_input_output(jar, code, args):
     env = os.environ
     in_fd, in_fn = tempfile.mkstemp(suffix='.js', dir='.')
     in_fn = os.path.basename(in_fn)
@@ -37,7 +38,7 @@ def _get_jar_input_output(jar, prog, args):
         os.close(out_fd)
         env['IN_FILE'], env['OUT_FILE'] = in_fn, out_fn
         with open(in_fn, 'wb') as infile:
-            infile.write(prog)
+            infile.write(code)
         try:
             p = subprocess.Popen(['java', '-jar', jar] + list(args),
                                  shell=True, env=env, stdout=subprocess.PIPE,
@@ -79,7 +80,9 @@ class YUIObfuscator(BaseObfuscator, JSObfuscatorMixin):
         if self.leak:
             args.append('--leaktype=%s' % (self._VALID_LEAKS_MAP[self.leak], ))
         args.extend(['-o', '%OUT_FILE%', '%IN_FILE%'])
-        return _get_jar_input_output(self.jar, prog, args)
+        o_prog = copy.deepcopy(prog)
+        o_prog.code = _get_jar_input_output(self.jar, prog.code, args)
+        return o_prog
 
     def __repr__(self):
         opts = []
@@ -101,4 +104,6 @@ class ClosureObfuscator(BaseObfuscator, JSObfuscatorMixin):
     def obfuscate(self, prog):
         args = ['-O', 'SIMPLE_OPTIMIZATIONS', '--js', '%IN_FILE%',
                 '--js_output_file', '%OUT_FILE%']
-        return _get_jar_input_output(self.jar, prog, args)
+        o_prog = copy.deepcopy(prog)
+        o_prog.code = _get_jar_input_output(self.jar, prog.code, args)
+        return o_prog

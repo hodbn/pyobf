@@ -1,8 +1,10 @@
 import PyV8
 import pytest
 
+from languages import *
 from obfuscators import YUIObfuscator, ClosureObfuscator
 from consts import *
+from program import Program
 
 
 @pytest.fixture(params=[YUIObfuscator(YUI_PATH),
@@ -16,15 +18,12 @@ def obf(request):
     return request.param
 
 
-@pytest.fixture(params=[(JS_FIB, JS_TEST_FIB),
-                        (JS_FACT, JS_TEST_FACT),
+@pytest.fixture(params=[Program('fib', LANG_JS, JS_FIB, JS_TEST_FIB),
+                        Program('fact', LANG_JS, JS_FACT, JS_TEST_FACT),
                         ])
 def prog(request, ctx):
-    p_fn, t_fn = request.param
-    with open(p_fn, 'rb') as f:
-        p = f.read()
-    with open(t_fn, 'rb') as f:
-        ctx.eval(f.read())
+    p = request.param
+    ctx.eval(p.test)
     return p
 
 
