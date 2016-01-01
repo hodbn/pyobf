@@ -29,31 +29,6 @@ def profile_combiner(c, p):
 
 
 def main():
-    JS_FACT = 'tests\\fact.js'
-    JS_TEST_FACT = 'tests\\test_fact.js'
-    prog = Program('fact', LANG_JS, JS_FACT, JS_TEST_FACT)
-    comb = C3OutOf4Combiner([
-                                YUIObfuscator(YUI_PATH, randomize=True),
-                                YUIObfuscator(YUI_PATH, randomize=True),
-                                YUIObfuscator(YUI_PATH, leak='in-code'),
-                                ClosureObfuscator(CLOSURE_PATH),
-                            ], maj=JSMajorityChooser())
-    p_obf = comb.combine(prog)
-
-    import PyV8
-    ctx = PyV8.JSContext()
-    ctx.enter()
-    JS_TEST_EQ = 'tests\\test_equals.js'
-    with open(JS_TEST_EQ, 'rb') as f:
-        ctx.eval(f.read())
-    ctx.eval(prog.test)
-    ctx.eval(prog.code)
-    ctx.eval('val1 = run_test()')
-    ctx.eval(p_obf.code)
-    ctx.eval('val2 = run_test()')
-    assert ctx.eval('test_equals(val1, val2)')
-
-    return
     jquery = Program('jquery', LANG_JS, JQUERY_PATH)
 
     o_norm = YUIObfuscator(YUI_PATH)
@@ -84,8 +59,15 @@ def main():
     profile_combiner(c_norm_rand_closure_in_code, jquery)
 
     # profile 3-out-of-4 combiners
-    return
     m = JSMajorityChooser()
+    f_norm_rand_closure = C3OutOf4Combiner(obfs=[o_norm, o_rand, o_closure],
+                                           maj=m)
+    f_norm_rand_closure_in_code = C3OutOf4Combiner(obfs=[o_norm, o_rand,
+                                                         o_closure,
+                                                         o_leak_in_code],
+                                                   maj=m)
+    profile_combiner(f_norm_rand_closure, jquery)
+    profile_combiner(f_norm_rand_closure_in_code, jquery)
 
     return 0
 
