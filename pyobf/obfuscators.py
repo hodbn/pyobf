@@ -76,8 +76,15 @@ class YUIObfuscator(BaseObfuscator, JSObfuscatorMixin):
         return _get_jar_input_output(self.jar, prog, args)
 
     def __repr__(self):
-        return '<%s rand=%r, leak=%r>' % (self.__class__.__name__,
-                                          self.randomize, self.leak)
+        opts = []
+        if self.randomize:
+            opts.append('rand=%r' % (self.randomize, ))
+        if self.leak is not None:
+            opts.append('leak=%r' % (self.leak, ))
+        opts = ', '.join(opts)
+        if opts:
+            opts = ' ' + opts
+        return '<%s%s>' % (self.__class__.__name__, opts)
 
 
 class ClosureObfuscator(BaseObfuscator, JSObfuscatorMixin):
