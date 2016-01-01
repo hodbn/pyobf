@@ -1,20 +1,27 @@
-(function() {
+function {{prog_name}}() {
     var
-        out = [
+        progs = [
         {% for prog in progs  %}
-            ({{prog}}).apply(this, arguments),
+            {{prog.code|unsafeescapejs}},
         {% endfor %}
         ],
+        out = [],
         freq = {},
         max = 0,
         result
     ;
-    for (var v in out) {
-        freq[out[v]] = (freq[out[v]] || 0) + 1;
-        if (freq[out[v]] > max) {
-            max = out[out[v]];
-            result = out[v];
+    for (var i = 0; i < progs; i++) {
+        var p = progs[i];
+        eval(p);
+        out.push({{prog_name}}.apply(this, arguments));
+    }
+    for (var i = 0; i < out.length; i++) {
+        var v = out[i];
+        freq[v] = (freq[v] || 0) + 1;
+        if (freq[v] > max) {
+            max = freq[v];
+            result = v;
         }
     }
     return result;
-})();
+}

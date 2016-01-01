@@ -1,8 +1,10 @@
 import sys
 import time
 from choosers import JSMajorityChooser
-from combiners import C4OutOf3Combiner, CascadeCombiner
+from combiners import C3OutOf4Combiner, CascadeCombiner
+from languages import *
 from obfuscators import YUIObfuscator, ClosureObfuscator
+from program import Program
 
 
 YUI_PATH = r'..\obfuscators\js\yuicompressor-2.4.8-leak\build\yuicompressor-2.4.8.jar'
@@ -15,13 +17,44 @@ def profile_obfuscator(o, p):
     s = time.time()
     out = o.obfuscate(p)
     e = time.time()
-    print 'size=%d,time=%3.3f' % (len(out), e - s)
-profile_combiner = profile_obfuscator
+    print 'size=%d,time=%3.3f' % (len(out.code), e - s)
+
+
+def profile_combiner(c, p):
+    print '%s:' % (c, ),
+    s = time.time()
+    out = c.combine(p)
+    e = time.time()
+    print 'size=%d,time=%3.3f' % (len(out.code), e - s)
 
 
 def main():
-    with open(JQUERY_PATH, 'rb') as f:
-        jquery = f.read()
+    JS_FACT = 'tests\\fact.js'
+    JS_TEST_FACT = 'tests\\test_fact.js'
+    prog = Program('fact', LANG_JS, JS_FACT, JS_TEST_FACT)
+    comb = C3OutOf4Combiner([
+                                YUIObfuscator(YUI_PATH, randomize=True),
+                                YUIObfuscator(YUI_PATH, randomize=True),
+                                YUIObfuscator(YUI_PATH, leak='in-code'),
+                                ClosureObfuscator(CLOSURE_PATH),
+                            ], maj=JSMajorityChooser())
+    p_obf = comb.combine(prog)
+
+    import PyV8
+    ctx = PyV8.JSContext()
+    ctx.enter()
+    JS_TEST_EQ = 'tests\\test_equals.js'
+    with open(JS_TEST_EQ, 'rb') as f:
+        ctx.eval(f.read())
+    ctx.eval(prog.test)
+    ctx.eval(prog.code)
+    ctx.eval('val1 = run_test()')
+    ctx.eval(p_obf.code)
+    ctx.eval('val2 = run_test()')
+    assert ctx.eval('test_equals(val1, val2)')
+
+    return
+    jquery = Program('jquery', LANG_JS, JQUERY_PATH)
 
     o_norm = YUIObfuscator(YUI_PATH)
     o_rand = YUIObfuscator(YUI_PATH, randomize=True)
