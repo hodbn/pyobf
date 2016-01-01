@@ -1,7 +1,7 @@
 import PyV8
 import pytest
 
-from obfuscators import YUIObfuscator
+from obfuscators import YUIObfuscator, ClosureObfuscator
 from consts import *
 
 
@@ -10,12 +10,14 @@ from consts import *
                         YUIObfuscator(YUI_PATH, leak='in-code'),
                         YUIObfuscator(YUI_PATH, leak='run-time'),
                         YUIObfuscator(YUI_PATH, leak='external'),
+                        ClosureObfuscator(CLOSURE_PATH),
                         ])
 def obf(request):
     return request.param
 
 
 @pytest.fixture(params=[(JS_FIB, JS_TEST_FIB),
+                        (JS_FACT, JS_TEST_FACT),
                         ])
 def prog(request, ctx):
     p_fn, t_fn = request.param
