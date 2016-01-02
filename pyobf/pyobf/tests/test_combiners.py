@@ -1,7 +1,7 @@
-from choosers import JSMajorityChooser
-from combiners import CascadeCombiner, C3OutOf4Combiner
-from obfuscators import YUIObfuscator, ClosureObfuscator
-from consts import *
+from ..choosers import JSMajorityChooser
+from ..combiners import CascadeCombiner, C3OutOf4Combiner
+from ..obfuscators import YUIObfuscator, ClosureObfuscator
+from ..consts import *
 
 
 def test_cascade_combiner(prog, ctx):

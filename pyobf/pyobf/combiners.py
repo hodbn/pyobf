@@ -1,4 +1,4 @@
-from obfuscators import BaseObfuscator
+from .obfuscators import BaseObfuscator
 
 
 class BaseCombiner(BaseObfuscator):

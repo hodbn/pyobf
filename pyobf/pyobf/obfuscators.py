@@ -4,7 +4,7 @@ import subprocess
 import sys
 import tempfile
 
-from languages import *
+from .languages import *
 
 
 class BaseObfuscator(object):
