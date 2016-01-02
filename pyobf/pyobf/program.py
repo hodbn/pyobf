@@ -1,4 +1,4 @@
-from languages import lang_text
+from .languages import lang_text
 
 
 class Program(object):

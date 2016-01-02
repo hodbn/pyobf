@@ -1,10 +1,11 @@
 import PyV8
 import pytest
 
-from languages import *
-from obfuscators import YUIObfuscator, ClosureObfuscator
-from consts import *
-from program import Program
+from .consts import *
+from ..languages import *
+from ..obfuscators import YUIObfuscator, ClosureObfuscator
+from ..consts import *
+from ..program import Program
 
 
 @pytest.fixture(params=[YUIObfuscator(YUI_PATH),

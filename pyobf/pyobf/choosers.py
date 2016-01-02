@@ -2,7 +2,8 @@ import copy
 import json
 import os
 import jinja2
-from languages import *
+
+from .languages import *
 
 
 tpl_loader = jinja2.FileSystemLoader(searchpath=os.path.join(
