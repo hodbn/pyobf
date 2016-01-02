@@ -1,16 +1,14 @@
 function {{prog_name}}() {
     var
-        progs = [
-        {% for prog in progs  %}
-            {{prog.code|unsafeescapejs}},
-        {% endfor %}
+        progs = [{% for prog in progs  %}
+            {{prog.code|unsafeescapejs}},{% endfor %}
         ],
         out = [],
         freq = {},
         max = 0,
         result
     ;
-    for (var i = 0; i < progs; i++) {
+    for (var i = 0; i < progs.length; i++) {
         var p = progs[i];
         eval(p);
         out.push({{prog_name}}.apply(this, arguments));
