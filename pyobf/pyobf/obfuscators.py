@@ -27,22 +27,32 @@ class CObfuscatorMixin:
         return LANG_C
 
 
-def _get_jar_input_output(jar, code, args):
+def _create_jar_process(jar, args, env):
+    return subprocess.Popen(['java', '-jar', jar] + list(args),
+                            shell=True, env=env, cwd=os.path.dirname(jar),
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+
+def _create_perl_process(script, args, env):
+    return subprocess.Popen(['perl', script] + list(args),
+                            shell=True, env=env, cwd=os.path.dirname(script),
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+
+def _get_input_output(proc_creator, exe, code, args):
     env = os.environ
-    in_fd, in_fn = tempfile.mkstemp(suffix='.js', dir='.')
-    in_fn = os.path.basename(in_fn)
+    cwd = os.path.dirname(exe)
+    in_fd, in_fn = tempfile.mkstemp(suffix='.js', dir=cwd)
     try:
         os.close(in_fd)
-        out_fd, out_fn = tempfile.mkstemp(suffix='.js', dir='.')
-        out_fn = os.path.basename(out_fn)
+        out_fd, out_fn = tempfile.mkstemp(suffix='.js', dir=cwd)
         os.close(out_fd)
-        env['IN_FILE'], env['OUT_FILE'] = in_fn, out_fn
+        env['IN_FILE'] = os.path.basename(in_fn)
+        env['OUT_FILE'] = os.path.basename(out_fn)
         with open(in_fn, 'wb') as infile:
             infile.write(code)
         try:
-            p = subprocess.Popen(['java', '-jar', jar] + list(args),
-                                 shell=True, env=env, stdout=subprocess.PIPE,
-                                 stderr=subprocess.PIPE)
+            p = proc_creator(exe, args, env)
             stdout, stderr = p.communicate()
             assert p.returncode is not None
             if p.returncode != 0:
@@ -55,6 +65,14 @@ def _get_jar_input_output(jar, code, args):
             os.unlink(out_fn)
     finally:
         os.unlink(in_fn)
+
+
+def _get_jar_input_output(jar, code, args):
+    return _get_input_output(_create_jar_process, jar, code, args)
+
+
+def _get_perl_input_output(script, code, args):
+    return _get_input_output(_create_perl_process, script, code, args)
 
 
 class YUIObfuscator(BaseObfuscator, JSObfuscatorMixin):
@@ -102,8 +120,23 @@ class ClosureObfuscator(BaseObfuscator, JSObfuscatorMixin):
         self.jar = jar
 
     def obfuscate(self, prog):
-        args = ['-O', 'SIMPLE_OPTIMIZATIONS', '--js', '%IN_FILE%',
+        args = ['-O', 'SIMPLE_OPTIMIZATIONS',
+                '--js', '%IN_FILE%',
                 '--js_output_file', '%OUT_FILE%']
         o_prog = copy.deepcopy(prog)
         o_prog.code = _get_jar_input_output(self.jar, prog.code, args)
+        return o_prog
+
+
+class PackerObfuscator(BaseObfuscator, JSObfuscatorMixin):
+    def __init__(self, script):
+        super(PackerObfuscator, self).__init__()
+        self.script = script
+
+    def obfuscate(self, prog):
+        args = ['-i', '%IN_FILE%',
+                '-o', '%OUT_FILE%',
+                '-e62']
+        o_prog = copy.deepcopy(prog)
+        o_prog.code = _get_perl_input_output(self.script, prog.code, args)
         return o_prog
