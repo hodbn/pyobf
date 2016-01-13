@@ -5,7 +5,7 @@ from pyobf.choosers import JSMajorityChooser
 from pyobf.combiners import C3OutOf4Combiner, CascadeCombiner
 from pyobf.consts import *
 from pyobf.languages import *
-from pyobf.obfuscators import YUIObfuscator, ClosureObfuscator
+from pyobf.obfuscators import YUIObfuscator, ClosureObfuscator, PackerObfuscator
 from pyobf.program import Program
 
 
@@ -42,33 +42,25 @@ profile_combiners = profile_obfuscators
 
 def main():
     progs = [
-        Program('jquery', LANG_JS, JS_JQUERY),
-        # Program('fact', LANG_JS, JS_FACT),
-        Program('angular', LANG_JS, JS_ANGULAR),
-        # Program('fib', LANG_JS, JS_FIB),
-        Program('dojo', LANG_JS, JS_DOJO),
-        # Program('popcorn', LANG_JS, JS_POPCORN),
-        Program('swig', LANG_JS, JS_SWIG),
-        Program('chart', LANG_JS, JS_CHART),
         Program('cookies', LANG_JS, JS_COOKIES),
-        # Program('modernizr', LANG_JS, JS_MODERNIZR),
-        Program('jcarousel', LANG_JS, JS_JCAROUSEL),
-        # Program('hammer', LANG_JS, JS_HAMMER),
-        Program('backbone', LANG_JS, JS_BACKBONE),
-        Program('epoch', LANG_JS, JS_EPOCH),
-        Program('physicsjs', LANG_JS, JS_PHYSICSJS),
-        # Program('soundjs', LANG_JS, JS_SOUNDJS),
-        Program('videojs', LANG_JS, JS_VIDEOJS),
-        Program('raphael', LANG_JS, JS_RAPHAEL),
         Program('highlight', LANG_JS, JS_HIGHLIGHT),
-        # Program('jqueryui', LANG_JS, JS_JQUERY_UI),
-        # Program('mootools', LANG_JS, JS_MOOTOOLS),
-        # Program('underscore', LANG_JS, JS_UNDERSCORE),
+        Program('jcarousel', LANG_JS, JS_JCAROUSEL),
+        Program('backbone', LANG_JS, JS_BACKBONE),
+        Program('chart', LANG_JS, JS_CHART),
+        Program('epoch', LANG_JS, JS_EPOCH),
+        Program('swig', LANG_JS, JS_SWIG),
+        Program('physicsjs', LANG_JS, JS_PHYSICSJS),
+        Program('jquery', LANG_JS, JS_JQUERY),
+        Program('raphael', LANG_JS, JS_RAPHAEL),
+        Program('dojo', LANG_JS, JS_DOJO),
+        Program('videojs', LANG_JS, JS_VIDEOJS),
+        Program('angular', LANG_JS, JS_ANGULAR),
     ]
 
     o_norm = YUIObfuscator(YUI_PATH)
     o_rand = YUIObfuscator(YUI_PATH, randomize=True)
     o_closure = ClosureObfuscator(CLOSURE_PATH)
+    o_packer = PackerObfuscator(PACKER_PATH)
 
     """
     o_leak_in_code = YUIObfuscator(YUI_PATH, leak='in-code')
@@ -76,13 +68,13 @@ def main():
     o_leak_external = YUIObfuscator(YUI_PATH, leak='external')
     """
 
-    c_norm_rand_closure = CascadeCombiner(obfs=[o_norm, o_rand, o_closure])
-    c_norm_rand_closure_norm = CascadeCombiner(obfs=[o_norm, o_rand, o_closure,
-                                                     o_norm])
+    c_norm_rand_closure_packer = CascadeCombiner(obfs=[o_norm, o_rand,
+                                                       o_closure, o_packer])
+    c_closure_packer_norm_rand = CascadeCombiner(obfs=[o_closure, o_packer,
+                                                       o_norm, o_rand])
 
     # profile normal obfuscators
-    profile_obfuscators([o_norm, o_rand, o_closure],
-                        progs)
+    profile_obfuscators([o_norm, o_rand, o_closure, o_packer], progs)
 
     # profile malicious obfuscators
     """
@@ -91,15 +83,16 @@ def main():
     """
 
     # profile cascade combiners
-    profile_combiners([c_norm_rand_closure, c_norm_rand_closure_norm], progs)
+    profile_combiners([c_norm_rand_closure_packer, c_closure_packer_norm_rand],
+                      progs)
 
     # profile 3-out-of-4 combiners
     m = JSMajorityChooser()
-    f_norm_rand_closure_norm = C3OutOf4Combiner(
-        obfs=[o_norm, o_rand, o_closure, o_norm], maj=m)
-    f_closure_rand_closure_norm = C3OutOf4Combiner(
-        obfs=[o_closure, o_rand, o_closure, o_norm], maj=m)
-    profile_combiners([f_norm_rand_closure_norm, f_closure_rand_closure_norm],
+    f_norm_rand_closure_packer = C3OutOf4Combiner(
+        obfs=[o_norm, o_rand, o_closure, o_packer], maj=m)
+    f_closure_packer_norm_rand = C3OutOf4Combiner(
+        obfs=[o_closure, o_packer, o_norm, o_rand], maj=m)
+    profile_combiners([f_norm_rand_closure_packer, f_closure_packer_norm_rand],
                       progs)
 
     return 0

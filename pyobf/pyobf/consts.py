@@ -8,6 +8,7 @@ _tests = os.path.join(_base, r'tests')
 YUI_PATH = os.path.join(_js_obf, r'yuicompressor-2.4.8-leak\build' +
                                  '\yuicompressor-2.4.8.jar')
 CLOSURE_PATH = os.path.join(_js_obf, r'closure\compiler.jar')
+PACKER_PATH = os.path.join(_js_obf, r'packer\jsPacker.pl')
 
 JS_FIB = os.path.join(_tests, r'fib.js')
 JS_FACT = os.path.join(_tests, r'fact.js')
