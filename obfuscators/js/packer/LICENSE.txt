@@ -1,0 +1,4 @@
+Written by Rob Seiler.
+Implements the original packer by Dean Edwards.
+
+Grabbed from: http://dean.edwards.name/download/
