@@ -1,0 +1,104 @@
+<YUIObfuscator> on <Program name=cookies, lang=JS>: size = 2778.000, pct = 41.86%, time = 0.522
+<YUIObfuscator> on <Program name=highlight, lang=JS>: size = 9350.000, pct = 41.36%, time = 0.565
+<YUIObfuscator> on <Program name=jcarousel, lang=JS>: size = 18750.000, pct = 40.75%, time = 0.588
+<YUIObfuscator> on <Program name=backbone, lang=JS>: size = 23341.000, pct = 32.68%, time = 0.579
+<YUIObfuscator> on <Program name=chart, lang=JS>: size = 54013.000, pct = 49.28%, time = 0.667
+<YUIObfuscator> on <Program name=epoch, lang=JS>: size = 72958.000, pct = 62.93%, time = 0.645
+<YUIObfuscator> on <Program name=swig, lang=JS>: size = 48566.000, pct = 33.73%, time = 0.627
+<YUIObfuscator> on <Program name=physicsjs, lang=JS>: size = 35395.000, pct = 20.60%, time = 0.576
+<YUIObfuscator> on <Program name=jquery, lang=JS>: size = 101992.000, pct = 42.82%, time = 2.536
+<YUIObfuscator> on <Program name=raphael, lang=JS>: size = 100186.000, pct = 32.93%, time = 1.719
+<YUIObfuscator> on <Program name=dojo, lang=JS>: size = 150631.000, pct = 23.93%, time = 0.920
+<YUIObfuscator> on <Program name=videojs, lang=JS>: size = 254084.000, pct = 37.61%, time = 2.327
+<YUIObfuscator> on <Program name=angular, lang=JS>: size = 178515.000, pct = 16.96%, time = 25.329
+<YUIObfuscator rand=True> on <Program name=cookies, lang=JS>: size = 2778.000, pct = 41.86%, time = 0.504
+<YUIObfuscator rand=True> on <Program name=highlight, lang=JS>: size = 9350.000, pct = 41.36%, time = 0.558
+<YUIObfuscator rand=True> on <Program name=jcarousel, lang=JS>: size = 18750.000, pct = 40.75%, time = 0.774
+<YUIObfuscator rand=True> on <Program name=backbone, lang=JS>: size = 23344.600, pct = 32.69%, time = 0.577
+<YUIObfuscator rand=True> on <Program name=chart, lang=JS>: size = 54016.500, pct = 49.28%, time = 0.860
+<YUIObfuscator rand=True> on <Program name=epoch, lang=JS>: size = 72958.000, pct = 62.93%, time = 0.691
+<YUIObfuscator rand=True> on <Program name=swig, lang=JS>: size = 48566.000, pct = 33.73%, time = 0.764
+<YUIObfuscator rand=True> on <Program name=physicsjs, lang=JS>: size = 35396.500, pct = 20.60%, time = 0.834
+<YUIObfuscator rand=True> on <Program name=jquery, lang=JS>: size = 101992.000, pct = 42.82%, time = 3.306
+<YUIObfuscator rand=True> on <Program name=raphael, lang=JS>: size = 100193.600, pct = 32.93%, time = 2.381
+<YUIObfuscator rand=True> on <Program name=dojo, lang=JS>: size = 150631.000, pct = 23.93%, time = 1.184
+<YUIObfuscator rand=True> on <Program name=videojs, lang=JS>: size = 254085.000, pct = 37.61%, time = 2.769
+<YUIObfuscator rand=True> on <Program name=angular, lang=JS>: size = 178515.000, pct = 16.96%, time = 32.329
+<ClosureObfuscator> on <Program name=cookies, lang=JS>: size = 2715.000, pct = 40.91%, time = 3.146
+<ClosureObfuscator> on <Program name=highlight, lang=JS>: size = 8840.000, pct = 39.11%, time = 3.272
+<ClosureObfuscator> on <Program name=jcarousel, lang=JS>: size = 17868.000, pct = 38.84%, time = 3.313
+<ClosureObfuscator> on <Program name=backbone, lang=JS>: size = 22089.000, pct = 30.93%, time = 3.678
+<ClosureObfuscator> on <Program name=chart, lang=JS>: size = 51653.000, pct = 47.12%, time = 3.220
+<ClosureObfuscator> on <Program name=epoch, lang=JS>: size = 69703.000, pct = 60.12%, time = 4.049
+<ClosureObfuscator> on <Program name=swig, lang=JS>: size = 46143.000, pct = 32.05%, time = 3.595
+<ClosureObfuscator> on <Program name=physicsjs, lang=JS>: size = 33416.000, pct = 19.45%, time = 3.876
+<ClosureObfuscator> on <Program name=jquery, lang=JS>: size = 90897.000, pct = 38.17%, time = 3.804
+<ClosureObfuscator> on <Program name=raphael, lang=JS>: size = 92056.000, pct = 30.26%, time = 4.845
+<ClosureObfuscator> on <Program name=dojo, lang=JS>: size = 120199.000, pct = 19.09%, time = 5.255
+<ClosureObfuscator> on <Program name=videojs, lang=JS>: size = 236769.000, pct = 35.05%, time = 6.690
+<ClosureObfuscator> on <Program name=angular, lang=JS>: size = 153130.000, pct = 14.55%, time = 5.020
+<PackerObfuscator> on <Program name=cookies, lang=JS>: size = 2578.000, pct = 38.84%, time = 0.272
+<PackerObfuscator> on <Program name=highlight, lang=JS>: size = 8893.000, pct = 39.34%, time = 0.666
+<PackerObfuscator> on <Program name=jcarousel, lang=JS>: size = 12937.000, pct = 28.12%, time = 1.395
+<PackerObfuscator> on <Program name=backbone, lang=JS>: size = 17203.000, pct = 24.09%, time = 2.674
+<PackerObfuscator> on <Program name=chart, lang=JS>: size = 34353.000, pct = 31.34%, time = 3.641
+<PackerObfuscator> on <Program name=epoch, lang=JS>: size = 47578.000, pct = 41.04%, time = 5.681
+<PackerObfuscator> on <Program name=swig, lang=JS>: size = 40783.000, pct = 28.33%, time = 4.372
+<PackerObfuscator> on <Program name=physicsjs, lang=JS>: size = 27954.000, pct = 16.27%, time = 4.226
+<PackerObfuscator> on <Program name=jquery, lang=JS>: size = 73828.000, pct = 31.00%, time = 13.593
+<PackerObfuscator> on <Program name=raphael, lang=JS>: size = 18224.000, pct = 5.99%, time = 2.901
+<PackerObfuscator> on <Program name=dojo, lang=JS>: size = 110807.000, pct = 17.60%, time = 47.449
+<PackerObfuscator> on <Program name=videojs, lang=JS>: size = 193750.000, pct = 28.68%, time = 63.057
+<PackerObfuscator> on <Program name=angular, lang=JS>: size = 150926.000, pct = 14.34%, time = 86.739
+<CascadeCombiner obfs=[<YUIObfuscator>, <YUIObfuscator rand=True>, <ClosureObfuscator>, <PackerObfuscator>]> on <Program name=cookies, lang=JS>: size = 2264.000, pct = 34.11%, time = 4.617
+<CascadeCombiner obfs=[<YUIObfuscator>, <YUIObfuscator rand=True>, <ClosureObfuscator>, <PackerObfuscator>]> on <Program name=highlight, lang=JS>: size = 7394.000, pct = 32.71%, time = 4.906
+<CascadeCombiner obfs=[<YUIObfuscator>, <YUIObfuscator rand=True>, <ClosureObfuscator>, <PackerObfuscator>]> on <Program name=jcarousel, lang=JS>: size = 11290.000, pct = 24.54%, time = 5.373
+<CascadeCombiner obfs=[<YUIObfuscator>, <YUIObfuscator rand=True>, <ClosureObfuscator>, <PackerObfuscator>]> on <Program name=backbone, lang=JS>: size = 15422.000, pct = 21.59%, time = 5.557
+<CascadeCombiner obfs=[<YUIObfuscator>, <YUIObfuscator rand=True>, <ClosureObfuscator>, <PackerObfuscator>]> on <Program name=chart, lang=JS>: size = 29465.000, pct = 26.88%, time = 5.818
+<CascadeCombiner obfs=[<YUIObfuscator>, <YUIObfuscator rand=True>, <ClosureObfuscator>, <PackerObfuscator>]> on <Program name=epoch, lang=JS>: size = 40003.000, pct = 34.50%, time = 6.945
+<CascadeCombiner obfs=[<YUIObfuscator>, <YUIObfuscator rand=True>, <ClosureObfuscator>, <PackerObfuscator>]> on <Program name=swig, lang=JS>: size = 33631.000, pct = 23.36%, time = 6.600
+<CascadeCombiner obfs=[<YUIObfuscator>, <YUIObfuscator rand=True>, <ClosureObfuscator>, <PackerObfuscator>]> on <Program name=physicsjs, lang=JS>: size = 22739.000, pct = 13.23%, time = 5.935
+<CascadeCombiner obfs=[<YUIObfuscator>, <YUIObfuscator rand=True>, <ClosureObfuscator>, <PackerObfuscator>]> on <Program name=jquery, lang=JS>: size = 64308.000, pct = 27.00%, time = 12.592
+<CascadeCombiner obfs=[<YUIObfuscator>, <YUIObfuscator rand=True>, <ClosureObfuscator>, <PackerObfuscator>]> on <Program name=raphael, lang=JS>: size = 70433.000, pct = 23.15%, time = 12.170
+<CascadeCombiner obfs=[<YUIObfuscator>, <YUIObfuscator rand=True>, <ClosureObfuscator>, <PackerObfuscator>]> on <Program name=dojo, lang=JS>: size = 87393.000, pct = 13.88%, time = 11.510
+<CascadeCombiner obfs=[<YUIObfuscator>, <YUIObfuscator rand=True>, <ClosureObfuscator>, <PackerObfuscator>]> on <Program name=videojs, lang=JS>: size = 153546.000, pct = 22.73%, time = 23.741
+<CascadeCombiner obfs=[<YUIObfuscator>, <YUIObfuscator rand=True>, <ClosureObfuscator>, <PackerObfuscator>]> on <Program name=angular, lang=JS>: size = 111240.000, pct = 10.57%, time = 45.752
+<CascadeCombiner obfs=[<ClosureObfuscator>, <PackerObfuscator>, <YUIObfuscator>, <YUIObfuscator rand=True>]> on <Program name=cookies, lang=JS>: size = 2266.000, pct = 34.14%, time = 3.978
+<CascadeCombiner obfs=[<ClosureObfuscator>, <PackerObfuscator>, <YUIObfuscator>, <YUIObfuscator rand=True>]> on <Program name=highlight, lang=JS>: size = 7396.000, pct = 32.72%, time = 4.861
+<CascadeCombiner obfs=[<ClosureObfuscator>, <PackerObfuscator>, <YUIObfuscator>, <YUIObfuscator rand=True>]> on <Program name=jcarousel, lang=JS>: size = 11292.000, pct = 24.54%, time = 5.103
+<CascadeCombiner obfs=[<ClosureObfuscator>, <PackerObfuscator>, <YUIObfuscator>, <YUIObfuscator rand=True>]> on <Program name=backbone, lang=JS>: size = 15424.000, pct = 21.60%, time = 5.633
+<CascadeCombiner obfs=[<ClosureObfuscator>, <PackerObfuscator>, <YUIObfuscator>, <YUIObfuscator rand=True>]> on <Program name=chart, lang=JS>: size = 29467.000, pct = 26.88%, time = 5.865
+<CascadeCombiner obfs=[<ClosureObfuscator>, <PackerObfuscator>, <YUIObfuscator>, <YUIObfuscator rand=True>]> on <Program name=epoch, lang=JS>: size = 40005.000, pct = 34.50%, time = 7.538
+<CascadeCombiner obfs=[<ClosureObfuscator>, <PackerObfuscator>, <YUIObfuscator>, <YUIObfuscator rand=True>]> on <Program name=swig, lang=JS>: size = 33639.000, pct = 23.36%, time = 6.821
+<CascadeCombiner obfs=[<ClosureObfuscator>, <PackerObfuscator>, <YUIObfuscator>, <YUIObfuscator rand=True>]> on <Program name=physicsjs, lang=JS>: size = 22741.000, pct = 13.23%, time = 5.686
+<CascadeCombiner obfs=[<ClosureObfuscator>, <PackerObfuscator>, <YUIObfuscator>, <YUIObfuscator rand=True>]> on <Program name=jquery, lang=JS>: size = 64310.000, pct = 27.00%, time = 8.680
+<CascadeCombiner obfs=[<ClosureObfuscator>, <PackerObfuscator>, <YUIObfuscator>, <YUIObfuscator rand=True>]> on <Program name=raphael, lang=JS>: size = 70435.000, pct = 23.15%, time = 9.945
+<CascadeCombiner obfs=[<ClosureObfuscator>, <PackerObfuscator>, <YUIObfuscator>, <YUIObfuscator rand=True>]> on <Program name=dojo, lang=JS>: size = 87395.000, pct = 13.88%, time = 10.546
+<CascadeCombiner obfs=[<ClosureObfuscator>, <PackerObfuscator>, <YUIObfuscator>, <YUIObfuscator rand=True>]> on <Program name=videojs, lang=JS>: size = 153363.000, pct = 22.70%, time = 17.464
+<CascadeCombiner obfs=[<ClosureObfuscator>, <PackerObfuscator>, <YUIObfuscator>, <YUIObfuscator rand=True>]> on <Program name=angular, lang=JS>: size = 111242.000, pct = 10.57%, time = 13.323
+<C3OutOf4Combiner obfs=[<YUIObfuscator>, <YUIObfuscator rand=True>, <ClosureObfuscator>, <PackerObfuscator>]> on <Program name=cookies, lang=JS>: size = 28704.000, pct = 432.48%, time = 4.237
+<C3OutOf4Combiner obfs=[<YUIObfuscator>, <YUIObfuscator rand=True>, <ClosureObfuscator>, <PackerObfuscator>]> on <Program name=highlight, lang=JS>: size = 94391.600, pct = 417.59%, time = 5.215
+<C3OutOf4Combiner obfs=[<YUIObfuscator>, <YUIObfuscator rand=True>, <ClosureObfuscator>, <PackerObfuscator>]> on <Program name=jcarousel, lang=JS>: size = 162881.000, pct = 354.04%, time = 6.569
+<C3OutOf4Combiner obfs=[<YUIObfuscator>, <YUIObfuscator rand=True>, <ClosureObfuscator>, <PackerObfuscator>]> on <Program name=backbone, lang=JS>: size = 200994.600, pct = 281.45%, time = 7.428
+<C3OutOf4Combiner obfs=[<YUIObfuscator>, <YUIObfuscator rand=True>, <ClosureObfuscator>, <PackerObfuscator>]> on <Program name=chart, lang=JS>: size = 433859.000, pct = 395.81%, time = 10.062
+<C3OutOf4Combiner obfs=[<YUIObfuscator>, <YUIObfuscator rand=True>, <ClosureObfuscator>, <PackerObfuscator>]> on <Program name=epoch, lang=JS>: size = 616172.000, pct = 531.46%, time = 12.865
+<C3OutOf4Combiner obfs=[<YUIObfuscator>, <YUIObfuscator rand=True>, <ClosureObfuscator>, <PackerObfuscator>]> on <Program name=swig, lang=JS>: size = 468610.000, pct = 325.48%, time = 11.493
+<C3OutOf4Combiner obfs=[<YUIObfuscator>, <YUIObfuscator rand=True>, <ClosureObfuscator>, <PackerObfuscator>]> on <Program name=physicsjs, lang=JS>: size = 303606.000, pct = 176.67%, time = 10.261
+<C3OutOf4Combiner obfs=[<YUIObfuscator>, <YUIObfuscator rand=True>, <ClosureObfuscator>, <PackerObfuscator>]> on <Program name=jquery, lang=JS>: size = 881002.000, pct = 369.91%, time = 29.602
+<C3OutOf4Combiner obfs=[<YUIObfuscator>, <YUIObfuscator rand=True>, <ClosureObfuscator>, <PackerObfuscator>]> on <Program name=raphael, lang=JS>: size = 700232.800, pct = 230.15%, time = 13.151
+<C3OutOf4Combiner obfs=[<YUIObfuscator>, <YUIObfuscator rand=True>, <ClosureObfuscator>, <PackerObfuscator>]> on <Program name=dojo, lang=JS>: size = 1285067.600, pct = 204.15%, time = 68.248
+<C3OutOf4Combiner obfs=[<YUIObfuscator>, <YUIObfuscator rand=True>, <ClosureObfuscator>, <PackerObfuscator>]> on <Program name=videojs, lang=JS>: size = 2279394.000, pct = 337.42%, time = 90.300
+<C3OutOf4Combiner obfs=[<YUIObfuscator>, <YUIObfuscator rand=True>, <ClosureObfuscator>, <PackerObfuscator>]> on <Program name=angular, lang=JS>: size = 1589303.000, pct = 151.03%, time = 157.240
+<C3OutOf4Combiner obfs=[<ClosureObfuscator>, <PackerObfuscator>, <YUIObfuscator>, <YUIObfuscator rand=True>]> on <Program name=cookies, lang=JS>: size = 28852.000, pct = 434.71%, time = 4.737
+<C3OutOf4Combiner obfs=[<ClosureObfuscator>, <PackerObfuscator>, <YUIObfuscator>, <YUIObfuscator rand=True>]> on <Program name=highlight, lang=JS>: size = 94362.400, pct = 417.46%, time = 5.038
+<C3OutOf4Combiner obfs=[<ClosureObfuscator>, <PackerObfuscator>, <YUIObfuscator>, <YUIObfuscator rand=True>]> on <Program name=jcarousel, lang=JS>: size = 168579.000, pct = 366.42%, time = 5.541
+<C3OutOf4Combiner obfs=[<ClosureObfuscator>, <PackerObfuscator>, <YUIObfuscator>, <YUIObfuscator rand=True>]> on <Program name=backbone, lang=JS>: size = 206990.200, pct = 289.84%, time = 6.539
+<C3OutOf4Combiner obfs=[<ClosureObfuscator>, <PackerObfuscator>, <YUIObfuscator>, <YUIObfuscator rand=True>]> on <Program name=chart, lang=JS>: size = 453206.100, pct = 413.46%, time = 8.868
+<C3OutOf4Combiner obfs=[<ClosureObfuscator>, <PackerObfuscator>, <YUIObfuscator>, <YUIObfuscator rand=True>]> on <Program name=epoch, lang=JS>: size = 641362.000, pct = 553.18%, time = 10.098
+<C3OutOf4Combiner obfs=[<ClosureObfuscator>, <PackerObfuscator>, <YUIObfuscator>, <YUIObfuscator rand=True>]> on <Program name=swig, lang=JS>: size = 474651.000, pct = 329.68%, time = 9.257
+<C3OutOf4Combiner obfs=[<ClosureObfuscator>, <PackerObfuscator>, <YUIObfuscator>, <YUIObfuscator rand=True>]> on <Program name=physicsjs, lang=JS>: size = 310854.900, pct = 180.89%, time = 9.177
+<C3OutOf4Combiner obfs=[<ClosureObfuscator>, <PackerObfuscator>, <YUIObfuscator>, <YUIObfuscator rand=True>]> on <Program name=jquery, lang=JS>: size = 908093.000, pct = 381.29%, time = 24.327
+<C3OutOf4Combiner obfs=[<ClosureObfuscator>, <PackerObfuscator>, <YUIObfuscator>, <YUIObfuscator rand=True>]> on <Program name=raphael, lang=JS>: size = 786261.100, pct = 258.42%, time = 12.152
+<C3OutOf4Combiner obfs=[<ClosureObfuscator>, <PackerObfuscator>, <YUIObfuscator>, <YUIObfuscator rand=True>]> on <Program name=dojo, lang=JS>: size = 1323382.000, pct = 210.23%, time = 66.886
+<C3OutOf4Combiner obfs=[<ClosureObfuscator>, <PackerObfuscator>, <YUIObfuscator>, <YUIObfuscator rand=True>]> on <Program name=videojs, lang=JS>: size = 2336850.400, pct = 345.93%, time = 97.024
+<C3OutOf4Combiner obfs=[<ClosureObfuscator>, <PackerObfuscator>, <YUIObfuscator>, <YUIObfuscator rand=True>]> on <Program name=angular, lang=JS>: size = 1614584.000, pct = 153.43%, time = 194.762
