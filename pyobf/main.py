@@ -30,6 +30,7 @@ def profile_obfuscator(o, p):
 
 
 def profile_obfuscators(obfs, progs):
+    # TODO: return latex output directly
     for o in obfs:
         for p in progs:
             print '%s on %s:' % (o, p),
